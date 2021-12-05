@@ -1,4 +1,4 @@
-# Regpose: A PyTorch Implementation of the Regpose Framework for 6DoF Object Pose Estimation
+# Modified CDPN: A PyTorch Implementation of a Two-Stage Approach for 6DoF Object Pose Estimation
 
 ### Introduction
 
@@ -82,7 +82,7 @@ Root
 ```
 5. run CoCo_AnnotationYCB.py to annotate YCB-Video Dataset. The annotation files are already provided.
 6. download weights from (Networks Folder) from [here](https://drive.google.com/drive/folders/1hyw3M-jILGXPgsCfKftol9iQ869J8BQr?usp=sharing)
-7. Download Annotation Files from [here](https://drive.google.com/drive/folders/1u2WSlYTJs5lFrS7_wYwDmB6Lz5oSpG5I?usp=sharing) and put them in source Folder (see Data Structure)
+7. Download Annotation Files from [here](https://drive.google.com/drive/folders/1WPKNm6WLz1aRo3vrubFaNRzNGZf6KuNC?usp=sharing) and put them in source Folder (see Data Structure)
 8. For training and test it needs to be speficied if allocentric or egocentric is going to be trained, evaluated by setting the variable in the config file train.rot_rep: 'allo'| 'ego'.
 
 ### Training Strategy
@@ -95,4 +95,9 @@ Root
 
 1. go to config.py in lib folder and chose the config file config_Test.yaml as configuration file to test, choose the used network (e.g: ../Networks/model_quat_allo.checkpoint) to test the quat head architecture trained allocentricly.
 2. run the model using main.py in tools folder.
-
+### YOLOV-CSP
+1. The reported results using the predicted bounding boxes where obtained using YOLOv4-CSP [Link](https://github.com/WongKinYiu/ScaledYOLOv4/tree/aea215d495056132f91391f8e618682bef376338), where the config file for the network is found in [config](https://drive.google.com/drive/folders/1AN0I2MT63hLVvsYjbUEDW8FJQ08eQz4w?usp=sharing)
+2. The configurations for the YCB-V Dataset for YOLOv4-CSP are in the underlying folder. [coco](https://drive.google.com/drive/folders/1OZ3YoTNjos8afKma8CiSXmbKZP5RN6Kb?usp=sharing)
+3. The trained network weights for YOLOv4-CSP used to regress the bounding boxes can be found [here](https://drive.google.com/file/d/1Clbzh-aa8CIOz91ctQFJe-e8B5dFU3nG/view?usp=sharing).
+4. The Pose estimation Network was evaluated on Keyframe_yolo.json, generated using the predicted bounding boxes from the YOLOv4-CSP Network. 
+5. The annotation File keyframe_yolo.json was generated using the file keyframeyolo.py
