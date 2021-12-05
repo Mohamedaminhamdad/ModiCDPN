@@ -1,0 +1,77 @@
+pytorch:
+  exp_id: 'modified_CDPN_all' 
+  task: 'rot_trans'  # 'rot | trans | rot_trans'
+  flag: True # set Flag to true for training  
+  cfg: ''           # path to configure file
+  gpu: 0            # Specify If GPU is used or not use GPU > -1 else CPU is used 
+  threads_num: 8    # Number of Threads used for Dataloader
+  load_model: ''    # Here weights from trans-head trained while freezing backbone+ rot head
+
+dataset:
+  name: 'YCB'     # YCB| Linemode
+
+dataiter:
+  out_res: 64 # For Dynamic Zoom-In 
+  tp: 'gaussian' # gaussian| uniform (Specify Distribution from where to sample)
+augment:
+  pad_ratio: 1.5 # padding ration 
+  scale_ratio: 0.25 # scale ration to introduce disturbance in sampled gt bounding boxes 
+  shift_ratio: 0.25 # shift ratio to introduce disturbance in sampled gt bounding boxes 
+
+network:
+  # ------ backbone -------- #
+  arch: 'resnet'
+  back_freeze: False
+  back_input_channel: 3 # # channels of backbone's input
+  nFeats: 256 # # features in the hourglass'
+  nStack: 4   # # hourglasses to stack
+  nModules: 2 # # residual modules at each hourglass
+  numBackLayers: 34 # 18 | 34 | 50 | 101 | 152
+  back_filters: 256 # number of filters for each layer
+
+
+  # ------ rotation head -------- #
+  rot_representation: 'rot' # Set the rotation representation |quat| for quaternion representation |rot| for 6D representation
+  rot_head_freeze: False # True| False if rotation head is not trained set it to True 
+  rot_layers_num: 3 #Convolutional Layers for rotation head
+  rot_filters_num: 256 # number of filters for each layer
+  rot_conv_kernel_size: 3 # kernel size for hidden layers
+  rot_output_channels: 6 # # channels of output (quaternions)
+
+
+  # ------ translation head -------- #
+  trans_head_freeze: False 
+  trans_layers_num: 3    # Convolutional Layers for translation head
+  trans_filters_num: 256 # number of filters for each layer
+  trans_conv_kernel_size: 3 # Kernel 
+  trans_output_channels: 3 # Output of tranlsation head (Scaled Invariant Translation) (delta_x,delta_y,t_z)
+
+train:
+  begin_epoch: 0 # Begin Epoches
+  end_epoch: 30 # End epoches
+  test_interval: 2 # Test Epoches
+  train_batch_size: 6 # Train batch Size 
+  lr_backbone: 1e-4 # Initial learning rate for backbone network 
+  lr_rot_head: 1e-4 # Initial learning rate for rotation head 
+  lr_trans_head: 1e-4 # Initial learning rate for transaltion head 
+  lr_epoch_step: # Scheduler, when learning rate is going to be reduced lr_new=lr*lr_factor
+  - 10
+  - 15
+  - 20
+  lr_factor: 0.1 # Factor by which Learning rate is reduced.
+  optimizer_name: 'RMSProp' # Optimizer # 'Adam' | 'Sgd' | 'Moment' | 'RMSProp'
+  momentum: 0.0
+  weightDecay: 0.0
+  alpha: 0.99
+  epsilon: 1e-8
+  rot_rep: 'allo'  # ego|allo egocentric or allocentric rotation representation
+
+
+loss:
+  rot_loss_type: 'acos' # | quatloss| for quaternionloss |acos| for rotation loss
+  rot_loss_weight: 1 
+  trans_loss_type: 'L2' # Loss for translation estimation
+  trans_loss_weight: 1
+
+
+
