@@ -99,5 +99,5 @@ Root
 1. The reported results using the predicted bounding boxes where obtained using YOLOv4-CSP [Link](https://github.com/WongKinYiu/ScaledYOLOv4/tree/aea215d495056132f91391f8e618682bef376338), where the config file for the network is found in [config](https://drive.google.com/drive/folders/1AN0I2MT63hLVvsYjbUEDW8FJQ08eQz4w?usp=sharing)
 2. The configurations for the YCB-V Dataset for YOLOv4-CSP are in the underlying folder. [coco](https://drive.google.com/drive/folders/1OZ3YoTNjos8afKma8CiSXmbKZP5RN6Kb?usp=sharing)
 3. The trained network weights for YOLOv4-CSP used to regress the bounding boxes can be found [here](https://drive.google.com/file/d/1Clbzh-aa8CIOz91ctQFJe-e8B5dFU3nG/view?usp=sharing).
-4. The Pose estimation Network was evaluated on Keyframe_yolo.json, generated using the predicted bounding boxes from the YOLOv4-CSP Network. 
+4. The Pose estimation Network was evaluated on keyframe_yolo.json, generated using the predicted bounding boxes from the YOLOv4-CSP Network. 
 5. The annotation File keyframe_yolo.json was generated using the file keyframeyolo.py
